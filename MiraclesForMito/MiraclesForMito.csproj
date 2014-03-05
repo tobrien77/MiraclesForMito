@@ -149,9 +149,12 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\ActionFilters\AdminsOnlyFilter.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\AdminUserController.cs" />
+    <Compile Include="Controllers\BlogController.cs" />
     <Compile Include="Controllers\BlogPostController.cs" />
+    <Compile Include="Controllers\NotifiedListItemController.cs" />
     <Compile Include="Controllers\EventController.cs" />
     <Compile Include="Controllers\EventsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -159,13 +162,23 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\BlogPost.cs" />
+    <Compile Include="Models\ChangePasswordModel.cs" />
+    <Compile Include="Models\BlogPaginationModel.cs" />
+    <Compile Include="Models\EventPaginationModel.cs" />
     <Compile Include="Models\Event.cs" />
+    <Compile Include="Models\ForgotPasswordModel.cs" />
+    <Compile Include="Models\NotifiedListItem.cs" />
+    <Compile Include="Models\PaginationModel.cs" />
     <Compile Include="Models\SiteDB.cs" />
     <Compile Include="Models\AdminUser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utilities\EmailHelpers.cs" />
+    <Compile Include="Utilities\Extensions.cs" />
+    <Compile Include="Utilities\SimpleCrypto.cs" />
     <Compile Include="Utilities\Util.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\admin.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -174,6 +187,7 @@
     <Content Include="Content\font-awesome-4.0.3\css\font-awesome.css" />
     <Content Include="Content\font-awesome-4.0.3\css\font-awesome.min.css" />
     <Content Include="Content\font-awesome-4.0.3\fonts\fontawesome-webfont.svg" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\main-page.css" />
     <Content Include="Content\themes\base\images\animated-overlay.gif" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
@@ -273,6 +287,14 @@
     <Content Include="Content\font-awesome-4.0.3\scss\_spinning.scss" />
     <Content Include="Content\font-awesome-4.0.3\scss\_stacked.scss" />
     <Content Include="Content\font-awesome-4.0.3\scss\_variables.scss" />
+    <Content Include="Images\Help-And-Support-Miracles-For-Mito.png" />
+    <Content Include="Images\Help-Support-Love-Miracles-For-Mito-Button.png" />
+    <Content Include="Images\nav-brand-logo-smaller.png" />
+    <Content Include="Scripts\jquery.color-2.1.2.min.js" />
+    <Content Include="Views\Helpers.cshtml" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.woff" />
     <None Include="Scripts\jquery-2.0.3.intellisense.js" />
     <Content Include="Images\calvin-smile.png" />
     <Content Include="Images\foot-bw.png" />
@@ -293,6 +315,7 @@
     <Content Include="Scripts\modernizr-2.7.1.js" />
     <Content Include="Scripts\navigation.js" />
     <Content Include="Scripts\OADate.js" />
+    <Content Include="Scripts\pagination.js" />
     <Content Include="Scripts\tinymce\jquery.tinymce.min.js" />
     <Content Include="Scripts\tinymce\license.txt" />
     <Content Include="Scripts\tinymce\plugins\advlist\plugin.js" />
@@ -500,6 +523,20 @@
     <Content Include="Views\Events\Detail.cshtml" />
     <Content Include="Views\Events\Index.cshtml" />
     <Content Include="Views\Events\IndexEventPartial.cshtml" />
+    <Content Include="Views\Admin\ChangePassword.cshtml" />
+    <Content Include="Views\Admin\ForgotPassword.cshtml" />
+    <Content Include="Views\Admin\BlogPostsPaginationBody.cshtml" />
+    <Content Include="Views\Admin\EventsPaginationBody.cshtml" />
+    <Content Include="Views\Admin\EventsPaginationPartial.cshtml" />
+    <Content Include="Views\Blog\Index.cshtml" />
+    <Content Include="Views\Blog\BlogPostsPaginationBody.cshtml" />
+    <Content Include="Views\Blog\BlogSinglePostPartial.cshtml" />
+    <Content Include="Views\Blog\BlogSearchPartial.cshtml" />
+    <Content Include="Views\Blog\Post.cshtml" />
+    <Content Include="Views\Blog\NewsletterFormPartial.cshtml" />
+    <Content Include="Views\Blog\BlogShareButtonsPartial.cshtml" />
+    <Content Include="Views\Home\Unsubscribe.cshtml" />
+    <Content Include="Views\Shared\_BlankLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

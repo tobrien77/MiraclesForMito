@@ -9,6 +9,7 @@ using System.Web;
 using System.Web.Http;
 using System.Web.Mvc;
 using MiraclesForMito.Models;
+using MiraclesForMito.Utilities;
 
 namespace MiraclesForMito.Controllers
 {
@@ -21,6 +22,13 @@ namespace MiraclesForMito.Controllers
 		{
 			if (!ModelState.IsValid)
 			{
+				return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
+			}
+
+			// email must be unique
+			if (db.Admins.Where(adminUser => adminUser.Email.ToLower() == user.Email.ToLower() && adminUser.ID != id).Count() > 0)
+			{
+				ModelState.AddModelError("EmailNotUnique", "The email address provided is not unique.");
 				return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
 			}
 
@@ -48,11 +56,41 @@ namespace MiraclesForMito.Controllers
 		{
 			if (ModelState.IsValid)
 			{
+				// email must be unique
+				if (db.Admins.Where(adminUser => adminUser.Email.ToLower() == user.Email.ToLower()).Count() > 0)
+				{
+					ModelState.AddModelError("EmailNotUnique", "A user with this email address already exists.");
+					return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
+				}
+
+				string sPasswordToSave = System.Web.Security.Membership.GeneratePassword(8, 5);
+				// create a random password
+				user.Password = sPasswordToSave;
+				// force them to change their password next time they login
+				user.ForceChangePassword = true;
+
 				db.Admins.Add(user);
 				db.SaveChanges();
 
 				HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.Created, user);
 				response.Headers.Location = new Uri(Url.Link("DefaultApi", new { id = user.ID }));
+
+				EmailHelpers.SendEmail(
+					new System.Net.Mail.MailMessage(EmailHelpers.SEND_EMAIL_ADDRESS, user.Email)
+					{
+						Subject = "Miracles for Mito -- User Account",
+						Body = @"Dear " + user.FirstName + " " + user.LastName + @",<br/><br/>
+							You have been added as a Miracles for Mito Admin user. Your credentials are as follows:<br/><br/>
+							<strong>Username:</strong> <em>[this email]</em><br/>
+							<strong>Password:</strong> " + sPasswordToSave + @"<br/><br/>
+						
+						Sincerely,<br/>
+						The Miracles for Mito Dev Team
+						",
+						IsBodyHtml = true
+					}
+				);
+
 				return response;
 			}
 			else

@@ -75,7 +75,7 @@
 				// if they actually want to quite just take them back to the view all page
 				if(bConfirmCancel)
 				{
-					window.location = "~/Admin/AdminUser".ResolveUrl();
+					window.location = "~/Admin/AdminUsers".ResolveUrl();
 				}
 			});
 
@@ -88,13 +88,13 @@
 				// written from serverside.
 				var bIsCreate = @bIsCreate.ToString().ToLower();
 				var sSuccesMessage = "Updated!";
-				var sFailMessage = "Failed to update!";
+				var sFailMessage = "Failed to update! Please ensure the email is unique.";
 
 				if (bIsCreate)
 				{
 					sAction = "POST";
 					sSuccesMessage = "Created!";
-					sFailMessage = "Failed to create!";
+					sFailMessage = "Failed to create! Please ensure the email is unique.";
 				}
 				else
 				{
@@ -110,7 +110,7 @@
 					function ()
 					{
 						alert(sSuccesMessage);
-						window.location = "~/Admin/AdminUser".ResolveUrl();
+						window.location = "~/Admin/AdminUsers".ResolveUrl();
 					}
 				)
 				.fail(function () { alert(sFailMessage) });
